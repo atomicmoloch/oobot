@@ -41,8 +41,14 @@ class OobClient(Client):
         else:
             verbose(f"sending a scheduled oob to {channel_desc}")
 
-        # 0.1% chance to send :alembic: instead (increases whimsy).
-        reply = "oob" if randrange(1000) != 0 else "\u2697\ufe0f"
+        # 0.1% chance of sending non-oob responses (increases whimsy).
+        reply = {
+            0: "\u2697\ufe0f",
+            1: "boo \U0001F47B",
+            2: "hi",
+            3: "meow",
+        }.get(randrange(1000), "oob")
+
 
         # Send the message, spending a random amount of time "typing" to make
         # things a little more fun :).
